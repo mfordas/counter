@@ -1,24 +1,31 @@
-import React from 'react';
-import logo from './logo.svg';
+import { useState } from 'react';
+import DateTimePicker from 'react-datetime-picker';
+
+import { Counter } from 'Components/Counter';
+import { createDateInMiliseconds } from 'utils/functions';
+import { constants } from 'constants/index';
+
 import './App.css';
 
 function App() {
+  const [lastSeen, setLastSeen] = useState(new Date());
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div className='App'>
+      <div className='dateTimeContainer'>
+        <DateTimePicker
+          value={lastSeen}
+          onChange={setLastSeen}
+          format={constants.DATE_FORMAT}
+        />
+      </div>
+      <Counter
+        lastSeen={
+          lastSeen
+            ? createDateInMiliseconds(lastSeen)
+            : createDateInMiliseconds()
+        }
+      />
     </div>
   );
 }
